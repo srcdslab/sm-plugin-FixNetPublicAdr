@@ -8,7 +8,7 @@ public Plugin myinfo =
 	name        = "FixNetPublicAddr",
 	author      = "maxime1907",
 	description = "Add/Edit convar net_public_adr for servers behind NAT/DHCP",
-	version     = "1.0.0",
+	version     = "1.0.1",
 	url         = ""
 };
 
@@ -19,6 +19,8 @@ public void OnPluginStart()
 	g_cvNetPublicAddr = FindConVar("net_public_adr");
 	if (g_cvNetPublicAddr == null)
 		g_cvNetPublicAddr = CreateConVar("net_public_adr", "", "For servers behind NAT/DHCP meant to be exposed to the public internet, this is the public facing ip address string: (\"x.x.x.x\" )", FCVAR_NOTIFY);
+
+	AutoExecConfig(true);
 }
 
 public void OnConfigsExecuted()
