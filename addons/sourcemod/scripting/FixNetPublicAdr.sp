@@ -82,7 +82,11 @@ void OnPublicIPReceived(HTTPResponse response, any value)
 
 	JSONObject jsonIP = view_as<JSONObject>(response.Data);
 	if (jsonIP == null)
+	{
+		LogError("Failed to parse JSON response from endpoint, fallback to hostip");
+		GetPublicIPFromHostIP();
 		return;
+	}
 
 	jsonIP.GetString("ip", g_sPublicIPAddress, sizeof(g_sPublicIPAddress));
 	delete jsonIP;
