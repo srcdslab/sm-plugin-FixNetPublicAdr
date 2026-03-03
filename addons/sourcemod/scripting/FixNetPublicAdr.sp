@@ -89,7 +89,6 @@ void OnPublicIPReceived(HTTPResponse response, any value)
 	}
 
 	jsonIP.GetString("ip", g_sPublicIPAddress, sizeof(g_sPublicIPAddress));
-	delete jsonIP;
 
 	g_cvNetPublicAddr.SetString(g_sPublicIPAddress, false, true);
 }
