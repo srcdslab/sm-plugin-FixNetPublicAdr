@@ -11,15 +11,14 @@ This repository contains a SourcePawn plugin for SourceMod that automatically se
 ```
 addons/sourcemod/scripting/
 ├── FixNetPublicAdr.sp          # Main plugin source code
-sourceknight.yaml               # Build configuration
-.github/workflows/ci.yml        # CI/CD pipeline
+.github/workflows/ci.yml        # CI/CD pipeline (native GitHub Actions)
 ```
 
 ## Technical Environment
 
 - **Language**: SourcePawn (SourceMod scripting language)
-- **Platform**: SourceMod 1.11.0-git6917+ (minimum requirement)
-- **Build Tool**: SourceKnight (configured in `sourceknight.yaml`)
+- **Platform**: SourceMod 1.12.x (CI compiler baseline)
+- **Build Tool**: Native GitHub Actions workflow using `rumblefrog/setup-sp` (spcomp)
 - **Dependencies**: 
   - SourceMod core
   - RiPExt extension (for HTTP requests)
@@ -46,15 +45,10 @@ sourceknight.yaml               # Build configuration
 
 ### Building the Plugin
 
-The project uses SourceKnight as the build system:
+The project uses a native GitHub Actions workflow with `rumblefrog/setup-sp` (spcomp) as the build system. Locally, this equates to cloning the RiPExt dependency and running `spcomp` directly against `FixNetPublicAdr.sp`.
 
-```bash
-# Build is handled automatically by CI/CD, but locally would be:
-sourceknight build
-```
-
-**Build Configuration**: See `sourceknight.yaml` for:
-- Dependencies (SourceMod, RiPExt extension)
+**Build Configuration**: See `.github/workflows/ci.yml` for:
+- Dependencies (SourceMod via `rumblefrog/setup-sp`, RiPExt extension via `git clone`)
 - Build targets
 - Output directory configuration
 
@@ -62,10 +56,11 @@ sourceknight build
 
 - **Trigger**: Push, PR, or manual dispatch
 - **Process**: 
-  1. Build plugin using SourceKnight action
-  2. Package build artifacts
-  3. Create releases for main branch and tags
-  4. Upload release packages
+  1. Install SourcePawn compiler via `rumblefrog/setup-sp`
+  2. Clone dependencies and compile plugin with `spcomp`
+  3. Package build artifacts
+  4. Create releases for main branch and tags
+  5. Upload release packages
 
 ### Testing
 
@@ -156,7 +151,7 @@ sourceknight build
 
 ## Dependencies & Compatibility
 
-- **Minimum SourceMod**: 1.11.0-git6917 (for modern SourcePawn syntax)
+- **Minimum SourceMod**: 1.12.x (CI compiler baseline; for modern SourcePawn syntax)
 - **Required Extensions**: RiPExt (for HTTP functionality)
 - **Game Compatibility**: All Source engine games supported by SourceMod
 - **Operating Systems**: Linux, Windows (wherever SourceMod runs)
