@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name        = "FixNetPublicAddr",
 	author      = "maxime1907, .Rushaway",
 	description = "Add/Edit convar net_public_adr for servers behind NAT/DHCP",
-	version     = "1.1.2",
+	version     = "1.1.3",
 	url         = ""
 };
 
@@ -89,6 +89,7 @@ void OnPublicIPReceived(HTTPResponse response, any value)
 	}
 
 	jsonIP.GetString("ip", g_sPublicIPAddress, sizeof(g_sPublicIPAddress));
+	delete jsonIP;
 
 	g_cvNetPublicAddr.SetString(g_sPublicIPAddress, false, true);
 }
@@ -97,7 +98,6 @@ stock void GetPublicIPFromHostIP()
 {
 	ConVar sHostIP = FindConVar("hostip");
 	int iServerIP = GetConVarInt(sHostIP);
-	delete sHostIP;
 
 	int ipUnsigned = iServerIP & 0xFFFFFFFF;
 	Format(g_sPublicIPAddress, sizeof(g_sPublicIPAddress), "%d.%d.%d.%d", (ipUnsigned >> 24) & 0xFF, (ipUnsigned >> 16) & 0xFF, (ipUnsigned >> 8) & 0xFF, ipUnsigned & 0xFF);
