@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name        = "FixNetPublicAddr",
 	author      = "maxime1907, .Rushaway",
 	description = "Add/Edit convar net_public_adr for servers behind NAT/DHCP",
-	version     = "1.1.3",
+	version     = "1.1.4",
 	url         = ""
 };
 
@@ -28,9 +28,9 @@ public void OnPluginStart()
 
 	AutoExecConfig(true);
 
-	HookConVarChange(g_cvMethod, OnConVarChanged);
-	HookConVarChange(g_cvCustomIP, OnConVarChanged);
-	HookConVarChange(g_cvPublicIPEndpout, OnConVarChanged);
+	g_cvMethod.AddChangeHook(OnConVarChanged);
+	g_cvCustomIP.AddChangeHook(OnConVarChanged);
+	g_cvPublicIPEndpout.AddChangeHook(OnConVarChanged);
 }
 
 public void OnConfigsExecuted()
@@ -97,7 +97,7 @@ void OnPublicIPReceived(HTTPResponse response, any value)
 stock void GetPublicIPFromHostIP()
 {
 	ConVar sHostIP = FindConVar("hostip");
-	int iServerIP = GetConVarInt(sHostIP);
+	int iServerIP = sHostIP.IntValue;
 
 	int ipUnsigned = iServerIP & 0xFFFFFFFF;
 	Format(g_sPublicIPAddress, sizeof(g_sPublicIPAddress), "%d.%d.%d.%d", (ipUnsigned >> 24) & 0xFF, (ipUnsigned >> 16) & 0xFF, (ipUnsigned >> 8) & 0xFF, ipUnsigned & 0xFF);
