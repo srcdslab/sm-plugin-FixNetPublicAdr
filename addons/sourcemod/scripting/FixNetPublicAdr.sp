@@ -1,5 +1,7 @@
 #include <ripext>
 
+#pragma newdecls required
+
 ConVar g_cvNetPublicAddr   = null;
 ConVar g_cvPublicIPEndpout = null;
 ConVar g_cvMethod          = null;
