@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name        = "FixNetPublicAddr",
 	author      = "maxime1907, .Rushaway",
 	description = "Add/Edit convar net_public_adr for servers behind NAT/DHCP",
-	version     = "1.2.0",
+	version     = "1.2.1",
 	url         = ""
 };
 
